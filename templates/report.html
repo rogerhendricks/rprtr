@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h2>report</h2>
+     <p>Model: {{ model }}</p>
+	  <p>Serial: {{serial}}</p>
+	 <div>
+		 <p>{{ comments }}</p>
+		 <div>
+		 <table>
+		 	<thead>
+				<th>Chamber</th>
+		 		<th>Impedance</th>
+				<th>Threshold</th>
+				<th>Battery</th>
+		 	</thead>
+			<tbody>
+				<tr>
+					<td>Atrium</td>
+					<td>{{ra_impedance}}</td>
+					<td>{{ra_amplitude}}</td>
+					<td>{{batt_remaining}}</td>
+				</tr>
+				<tr>
+					<td>Right Ventricle</td>
+					<td>{{rv_impedance}}</td>
+					<td>{{rv_amplitude}}</td>
+					<td>{{batt_voltage}}</td>
+				</tr>
+			</tbody>
+		 </table>
+	 	</div>
+	 </div>
+</body>
+</html>
