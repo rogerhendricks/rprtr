@@ -18,8 +18,8 @@ class AbbotImport():
                         'followup_physician':mode.get('Follow-up Physician', '-'),
                         'sess_date':mode.get('', datetime.datetime.now()),
                         'type':mode.get('type', '-'),
-                        'model':mode.get('Device Model Name', '-'),
-                        'device_name':mode.get('Device Model Number','-'),
+                        'model':mode.get('Device Model Number', '-'),
+                        'device_name':mode.get('Device Model Name','-'),
                         'serial':mode.get('Device Serial Number', '-'),
                         'mfg':'Abbot',
 
@@ -67,6 +67,7 @@ class AbbotImport():
                         'mode':mode.get('Mode', '-'),                       
                         'lowrate':mode.get('Base Rate', '0'),
                         'max_tracking_rate':mode.get('Maximum Tracking Rate', '0'),
+                        'max_sensor_rate':mode.get('Maximum Sensor Rate', '0'), ##############################################
                         
                         'sensed_AV_delay':mode.get('Sensed AV Delay', '0'),
                         'ra_amplitude':mode.get('Atrial Pulse Amplitude', '0'),
