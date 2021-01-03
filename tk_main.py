@@ -105,19 +105,19 @@ class Editor(tk.Tk):
         self.typeentry = Entry(device_frame, textvariable="type")
         self.modelbl = Label(device_frame, text="Mode")
         self.modeentry = Entry(device_frame, textvariable="mode")
-        self.lowratelbl = Label(device_frame, text="Low Rate")
-        self.lowrateentry = Entry(device_frame, textvariable="low_rate")
+        self.sess_prev_lbl = Label(device_frame, text="Previous Session")
+        self.sess_prev_entry = Entry(device_frame, textvariable="sess_prev")
         
 
-        self.dev_lrl_lbl = Label(settings_frame, text="Lower Rate")
-        self.dev_lrl_entry = Entry(settings_frame, textvariable="lower_rate")
-        self.dev_lrl_lbl_test = Label(settings_frame, text="Lower Rate")
-        self.dev_lrl_entry_test = Entry(settings_frame, textvariable="lower_rate")
+        self.dev_lrl_lbl = Label(settings_frame, text="Low Rate")
+        self.dev_lrl_entry = Entry(settings_frame, textvariable="low_rate")
+        self.dev_lrl_lbl_test = Label(settings_frame, text="Low Rate")
+        self.dev_lrl_entry_test = Entry(settings_frame, textvariable="low_rate")
 
-        self.dev_lrl_lbl_1 = Label(settings_frame, text="Lower Rate")
-        self.dev_lrl_entry_1 = Entry(settings_frame, textvariable="lower_rate")
-        self.dev_lrl_lbl_test_1 = Label(settings_frame, text="Lower Rate")
-        self.dev_lrl_entry_test_1 = Entry(settings_frame, textvariable="lower_rate")
+        self.dev_lrl_lbl_1 = Label(settings_frame, text="Low Rate")
+        self.dev_lrl_entry_1 = Entry(settings_frame, textvariable="low_rate")
+        self.dev_lrl_lbl_test_1 = Label(settings_frame, text="Low Rate")
+        self.dev_lrl_entry_test_1 = Entry(settings_frame, textvariable="low_rate")
 
 
         self.ep_af_lbl = Label(episode_frame, text="AF Burden")
@@ -148,8 +148,8 @@ class Editor(tk.Tk):
         self.typeentry.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
         self.modelbl.grid(column=3, row=2, sticky = E, padx = 5, pady = 3)
         self.modeentry.grid(column=4, row=2, columnspan=2, padx = 5, pady = 3)
-        self.lowratelbl.grid(column=3, row=3, sticky = E, padx = 5, pady = 3)
-        self.lowrateentry.grid(column=4, row=3, columnspan=2, padx = 5, pady = 3)
+        self.sess_prev_lbl.grid(column=3, row=3, sticky = E, padx = 5, pady = 3)
+        self.sess_prev_entry.grid(column=4, row=3, columnspan=2, padx = 5, pady = 3)
         self.sess_datelbl.grid(column=3, row=4, sticky=E, padx=5, pady=3)
         self.sess_dateentry.grid(column=4, row=4, columnspan=2, padx=5, pady=3)
 
