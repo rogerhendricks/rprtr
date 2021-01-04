@@ -90,7 +90,7 @@ class Editor(tk.Tk):
         episode_frame = LabelFrame(episode, text="Episodes", borderwidth=5, width=200, height=150)
         ##### Frame for test editor #####
         editor_content = Frame(self)
-
+        #initalizing fields for device frame
         self.sess_datelbl = Label(device_frame, text="Session Date")# to change the font color / its a ttk widget add , background='white
         self.sess_dateentry = Entry(device_frame, textvariable="sess_date")
         self.name_fulllbl = Label(device_frame, text="Full Name")
@@ -103,17 +103,18 @@ class Editor(tk.Tk):
         self.serialentry = Entry(device_frame, textvariable="serial")
         self.typelbl = Label(device_frame, text="Type")
         self.typeentry = Entry(device_frame, textvariable="type")
-        self.modelbl = Label(device_frame, text="Mode")
-        self.modeentry = Entry(device_frame, textvariable="mode")
+        self.followup_physician_lbl = Label(device_frame, text="Physician")
+        self.followup_physician_entry = Entry(device_frame, textvariable="mode")
         self.sess_prev_lbl = Label(device_frame, text="Previous Session")
         self.sess_prev_entry = Entry(device_frame, textvariable="sess_prev")
         
-
-        self.dev_lrl_lbl = Label(settings_frame, text="Low Rate")
-        self.dev_lrl_entry = Entry(settings_frame, textvariable="low_rate")
-        self.dev_lrl_lbl_test = Label(settings_frame, text="Low Rate")
-        self.dev_lrl_entry_test = Entry(settings_frame, textvariable="low_rate")
-
+        # Initalizing fields for settings frame
+        # Column 1 - labels, Column 2 = entries
+        self.modelbl = Label(settings_frame, text="Mode")
+        self.modeentry = Entry(settings_frame, textvariable="mode")
+        self.max_tracking_lbl = Label(settings_frame, text="Max Tracking Rate")
+        self.max_tracking_entry = Entry(settings_frame, textvariable="max_tracking")
+        # Column 3 - labels, Column 4 = entries
         self.dev_lrl_lbl_1 = Label(settings_frame, text="Low Rate")
         self.dev_lrl_entry_1 = Entry(settings_frame, textvariable="low_rate")
         self.dev_lrl_lbl_test_1 = Label(settings_frame, text="Low Rate")
@@ -146,8 +147,8 @@ class Editor(tk.Tk):
         self.serialentry.grid(column=1, row=4, columnspan=2, padx = 5, pady = 3)
         self.typelbl.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
         self.typeentry.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
-        self.modelbl.grid(column=3, row=2, sticky = E, padx = 5, pady = 3)
-        self.modeentry.grid(column=4, row=2, columnspan=2, padx = 5, pady = 3)
+        self.followup_physician_lbl.grid(column=3, row=2, sticky = E, padx = 5, pady = 3)
+        self.followup_physician_entry.grid(column=4, row=2, columnspan=2, padx = 5, pady = 3)
         self.sess_prev_lbl.grid(column=3, row=3, sticky = E, padx = 5, pady = 3)
         self.sess_prev_entry.grid(column=4, row=3, columnspan=2, padx = 5, pady = 3)
         self.sess_datelbl.grid(column=3, row=4, sticky=E, padx=5, pady=3)
@@ -155,10 +156,10 @@ class Editor(tk.Tk):
 
 
         ############ Setting Fields #############
-        self.dev_lrl_lbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
-        self.dev_lrl_entry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
-        self.dev_lrl_lbl_test.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
-        self.dev_lrl_entry_test.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
+        self.modelbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
+        self.modeentry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
+        self.max_tracking_lbl.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
+        self.max_tracking_entry.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
 
         self.dev_lrl_lbl_1.grid(column=0, row=2, sticky = E, padx = 5, pady = 3)
         self.dev_lrl_entry_1.grid(column=1, row=2, columnspan=2, padx = 5, pady = 3)
