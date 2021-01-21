@@ -19,7 +19,6 @@ class BscImport():
         mode = modeclass.getbscData(fileName)
         self.bsc_Dict = {'name_given':mode.get('PatientFirstName', 'Not Given'),
                         'name_family':mode.get('PatientLastName', 'Not Given'),
-                        'followup_physician'
                         'sess_date':mode.get('', datetime.datetime.now()),
                         'type':mode.get('SystemTypeTierName', '-'),
                         'model':mode.get('SystemName', '-'),
@@ -37,8 +36,6 @@ class BscImport():
                         'at_burden':mode.get('', '0'), #at/af burden in pecentage form
                         'total_pac_count':mode.get('BdyCounterData.Recent.TotalPACCount', '0'),
                         'total_pvc_count':mode.get('BdyCounterData.Previous.PVC.TotalPVCCount', '0'),
-                        'ataf_total'
-                        'ataf_reset'
                         'nsvt_counter_life':mode.get('VTachyCounterData.Life.NonSustainedEpsd', '0'),
                         'vt_counter_life':mode.get('VTachyCounterData.Life.VTEpsdTotal', '0'),
                         'vt1_counter_life':mode.get('VTachyCounterData.Life.VT1EpsdTotal', '0'),
@@ -71,7 +68,7 @@ class BscImport():
                         'lowrate':mode.get('NormParams.LRLIntvl', '0'),
                         'max_tracking':mode.get('Maximum Tracking Rate', '0'),
 
-                        'sensed_AV_delay':mode.get('BdyNormSenseAVDelayOffset', '0'),
+                        'sensed_AV_delay':mode.get('BdyPSAVDelayMin', '0'),
                         'ra_amplitude':mode.get('BdyNormAAmplitude', '0'),
                         'ra_pulsewidth':mode.get('BdyNormAPulseWidth', '0'),
                         'ra_pace_polarity':mode.get('PaceVectorsParam.RA', '-'),

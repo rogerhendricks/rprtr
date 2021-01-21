@@ -1,19 +1,20 @@
 import sys
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import QFile, QIODevice
-from mainwindow_ui import Ui_MainWindow
+import os
+# from PySide6.QtUiTools import QUiLoader
+# from PySide6.QtWidgets import QApplication, QMainWindow
+# from PySide6.QtCore import QFile, QIODevice
+# from mainwindow_ui import Ui_MainWindow
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtQml import QQmlApplicationEngine
 
 
+# Instance class
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-
+    app = QGuiApplication(sys.argv)
+    engine = QQmlApplicationEngine()
+    engine.load(os.path.join(os.path.dirname(__file__), "qml/login.qml"))
+    # check exit app
+    if not engine.rootObjects():
+        sys.exit(-1)
     sys.exit(app.exec_())

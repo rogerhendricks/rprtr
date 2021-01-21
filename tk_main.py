@@ -23,7 +23,7 @@ class Editor(tk.Tk):
         self.WINDOW_TITLE = "Check Editor"
         self.open_file = ""
         self.title(self.WINDOW_TITLE)
-        self.geometry("900x600")
+        self.geometry("920x640")
         #self.config(bg='#2B2B2B')
         self.stateVar=StringVar()
         self.stateVar.set("Initial Value")
@@ -63,7 +63,7 @@ class Editor(tk.Tk):
         toolbar.grid(column = 0, row = 0, sticky='W' ,columnspan = 4, padx = 5, pady= 5)
         openfiletb = Button(toolbar, text="Open File", width=9, command=self.openfile)
         openfiletb.grid(column = 0, row = 0, padx = 5, pady= 5)
-        runbtn = Button(toolbar, text="Populate", width = 8, command=self.onButtonPressed)
+        runbtn = Button(toolbar, text="Populate", width = 8, command=self.onPdfButtonPressed)
         runbtn.grid(column=1, row=0, padx = 5, pady= 5)
         dicbtn = Button(toolbar, text="To PDF", width = 8, command=self.onPrintButtonPressed)
         dicbtn.grid(column=2, row=0, padx = 5, pady= 5)
@@ -90,35 +90,39 @@ class Editor(tk.Tk):
         episode_frame = LabelFrame(episode, text="Episodes", borderwidth=5, width=200, height=150)
         ##### Frame for test editor #####
         editor_content = Frame(self)
-        #initalizing fields for device frame
-        self.sess_datelbl = Label(device_frame, text="Session Date")# to change the font color / its a ttk widget add , background='white
-        self.sess_dateentry = Entry(device_frame, textvariable="sess_date")
-        self.name_fulllbl = Label(device_frame, text="Full Name")
-        self.name_fullentry = Entry(device_frame, textvariable="full_name")
-        self.manlbl = Label(device_frame, text="Manufacturer")
-        self.manentry = Entry(device_frame, textvariable="man")
-        self.modellbl = Label(device_frame, text="Model")
-        self.modelentry = Entry(device_frame, text="model")
-        self.seriallbl = Label(device_frame, text="Serial")
-        self.serialentry = Entry(device_frame, textvariable="serial")
-        self.typelbl = Label(device_frame, text="Type")
-        self.typeentry = Entry(device_frame, textvariable="type")
-        self.followup_physician_lbl = Label(device_frame, text="Physician")
-        self.followup_physician_entry = Entry(device_frame, textvariable="mode")
-        self.sess_prev_lbl = Label(device_frame, text="Previous Session")
-        self.sess_prev_entry = Entry(device_frame, textvariable="sess_prev")
+
+
+        self.name_full_lbl = Label(device_frame, text="Full Name")
+        self.name_full_entry = Entry(device_frame, textvariable="full_name")
+        self.man_lbl = Label(device_frame, text="Manufacturer")
+        self.man_entry = Entry(device_frame, textvariable="man")
+        self.model_lbl = Label(device_frame, text="Model")
+        self.model_entry = Entry(device_frame, text="model")
+        self.serial_lbl = Label(device_frame, text="Serial")
+        self.serial_entry = Entry(device_frame, textvariable="serial")
+        self.type_lbl = Label(device_frame, text="Type")
+        self.type_entry = Entry(device_frame, textvariable="type")
+        self.lowrate_lbl = Label(device_frame, text="Low Rate")
+        self.lowrate_entry = Entry(device_frame, textvariable="low_rate")
+        self.implant_lbl = Label(device_frame, text="Implant Date")
+        self.implant_entry = Entry(device_frame, textvariable="implant")
+        self.sess_date_lbl = Label(device_frame, text="Session Date")# to change the font color / its a ttk widget add , background='white
+        self.sess_date_entry = Entry(device_frame, textvariable="sess_date")
         
-        # Initalizing fields for settings frame
-        # Column 1 - labels, Column 2 = entries
-        self.modelbl = Label(settings_frame, text="Mode")
-        self.modeentry = Entry(settings_frame, textvariable="mode")
-        self.max_tracking_lbl = Label(settings_frame, text="Max Tracking Rate")
-        self.max_tracking_entry = Entry(settings_frame, textvariable="max_tracking")
-        # Column 3 - labels, Column 4 = entries
-        self.dev_lrl_lbl_1 = Label(settings_frame, text="Low Rate")
-        self.dev_lrl_entry_1 = Entry(settings_frame, textvariable="low_rate")
-        self.dev_lrl_lbl_test_1 = Label(settings_frame, text="Low Rate")
-        self.dev_lrl_entry_test_1 = Entry(settings_frame, textvariable="low_rate")
+
+
+        self.dev_mode_lbl = Label(settings_frame, text="Mode")
+        self.dev_mode_entry = Entry(settings_frame, textvariable="mode")
+        self.dev_lrl_lbl_test = Label(settings_frame, text="Lower Rate")
+        self.dev_lrl_entry_test = Entry(settings_frame, textvariable="lower_rate")
+
+        self.dev_max_tracking_lbl = Label(settings_frame, text="Max Tracking")
+        self.dev_max_tracking_entry = Entry(settings_frame, textvariable="max_tracking")
+
+        self.dev_lrl_lbl = Label(settings_frame, text="Low Rate")
+        self.dev_lrl_entry = Entry(settings_frame, textvariable="low_rate")
+        self.dev_lrl_lbl_test_1 = Label(settings_frame, text="Lower Rate")
+        self.dev_lrl_entry_test_1 = Entry(settings_frame, textvariable="lower_rate")
 
 
         self.ep_af_lbl = Label(episode_frame, text="AF Burden")
@@ -136,33 +140,35 @@ class Editor(tk.Tk):
         device_frame.grid(column=0, row=0)
         settings_frame.grid(column=1, row=0, padx= 10)
 
-        ############ Setting Fields #############
-        self.name_fulllbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
-        self.name_fullentry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
-        self.manlbl.grid(column=0, row=2, sticky = E, padx = 5, pady = 3)
-        self.manentry.grid(column=1, row=2, columnspan=2, padx = 5, pady = 3)
-        self.modellbl.grid(column=0, row=3, sticky = E, padx = 5, pady = 3)
-        self.modelentry.grid(column=1, row=3, columnspan=2, padx = 5, pady = 3)
-        self.seriallbl.grid(column=0, row=4, sticky = E, padx = 5, pady = 3)
-        self.serialentry.grid(column=1, row=4, columnspan=2, padx = 5, pady = 3)
-        self.typelbl.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
-        self.typeentry.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
-        self.followup_physician_lbl.grid(column=3, row=2, sticky = E, padx = 5, pady = 3)
-        self.followup_physician_entry.grid(column=4, row=2, columnspan=2, padx = 5, pady = 3)
-        self.sess_prev_lbl.grid(column=3, row=3, sticky = E, padx = 5, pady = 3)
-        self.sess_prev_entry.grid(column=4, row=3, columnspan=2, padx = 5, pady = 3)
-        self.sess_datelbl.grid(column=3, row=4, sticky=E, padx=5, pady=3)
-        self.sess_dateentry.grid(column=4, row=4, columnspan=2, padx=5, pady=3)
+        ############ Device Fields #############
+        self.name_full_lbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
+        self.name_full_entry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
+        self.man_lbl.grid(column=0, row=2, sticky = E, padx = 5, pady = 3)
+        self.man_entry.grid(column=1, row=2, columnspan=2, padx = 5, pady = 3)
+        self.model_lbl.grid(column=0, row=3, sticky = E, padx = 5, pady = 3)
+        self.model_entry.grid(column=1, row=3, columnspan=2, padx = 5, pady = 3)
+        self.serial_lbl.grid(column=0, row=4, sticky = E, padx = 5, pady = 3)
+        self.serial_entry.grid(column=1, row=4, columnspan=2, padx = 5, pady = 3)
+        self.type_lbl.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
+        self.type_entry.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
+        self.lowrate_lbl.grid(column=3, row=2, sticky = E, padx = 5, pady = 3)
+        self.lowrate_entry.grid(column=4, row=2, columnspan=2, padx = 5, pady = 3)
+        self.implant_lbl.grid(column=3, row=3, sticky = E, padx = 5, pady = 3)
+        self.implant_entry.grid(column=4, row=3, columnspan=2, padx = 5, pady = 3)
+        self.sess_date_lbl.grid(column=3, row=4, sticky=E, padx=5, pady=3)
+        self.sess_date_entry.grid(column=4, row=4, columnspan=2, padx=5, pady=3)
 
 
-        ############ Setting Fields #############
-        self.modelbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
-        self.modeentry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
-        self.max_tracking_lbl.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
-        self.max_tracking_entry.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
+        ############ Settings Fields #############
+        self.dev_mode_lbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
+        self.dev_mode_entry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
+        self.dev_lrl_lbl_test.grid(column=3, row=1, sticky = E, padx = 5, pady = 3)
+        self.dev_lrl_entry_test.grid(column=4, row=1, columnspan=2, padx = 5, pady = 3)
 
-        self.dev_lrl_lbl_1.grid(column=0, row=2, sticky = E, padx = 5, pady = 3)
-        self.dev_lrl_entry_1.grid(column=1, row=2, columnspan=2, padx = 5, pady = 3)
+        self.dev_lrl_lbl.grid(column=0, row=2, sticky = E, padx = 5, pady = 3)
+        self.dev_lrl_entry.grid(column=1, row=2, columnspan=2, padx = 5, pady = 3)
+        self.dev_max_tracking_lbl.grid(column=0, row=3, sticky = E, padx = 5, pady = 3)
+        self.dev_max_tracking_entry.grid(column=1, row=3, columnspan=2, padx = 5, pady=3)
         self.dev_lrl_lbl_test_1.grid(column=3, row=2, sticky = E, padx = 5, pady = 3)
         self.dev_lrl_entry_test_1.grid(column=4, row=2, columnspan=2, padx = 5, pady = 3)
     
@@ -171,7 +177,8 @@ class Editor(tk.Tk):
         self.ep_af_entry.grid(column=1, row=0, columnspan=2, padx = 5, pady = 3)
         self.ep_ms_lbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
         self.ep_ms_entry.grid(column=1, row=1, columnspan=2, padx = 5, pady = 3)
-
+        
+        ########## Comment Editor ########
         self.editor = tkst.ScrolledText(master = editor_content, wrap = WORD, width = 75, height = 15, font=("Helvetica", 12))
         self.editor.grid(column = 0, columnspan = 3, padx = 10, pady = 10)
 
@@ -191,30 +198,32 @@ class Editor(tk.Tk):
         #except:
             #print("No file exists")
     
-    def onButtonPressed(self):
+    def onPdfButtonPressed(self):
         #Bring in Data class and instatiate it.
         d = getData.Data()
         self.dataDict = d.data(fileName)
         print(self.dataDict)
         # Clear contents of entry widgets
-        self.modelentry.delete(0, END)
-        self.modeentry.delete(0, END)
-        self.typeentry.delete(0, END)
-        self.serialentry.delete(0, END)
-        self.manentry.delete(0, END)
-        self.name_fullentry.delete(0, END)
-        self.lowrateentry.delete(0, END)
-        self.sess_dateentry.delete(0, END)
+        self.model_entry.delete(0, END)
+        self.dev_mode_entry.delete(0, END)
+        self.type_entry.delete(0, END)
+        self.serial_entry.delete(0, END)
+        self.man_entry.delete(0, END)
+        self.name_full_entry.delete(0, END)
+        self.lowrate_entry.delete(0, END)
+        self.sess_date_entry.delete(0, END)
+        self.dev_max_tracking_entry.delete(0, END)
         # Populate entry widgets
-        self.modelentry.insert(0, self.dataDict['model'])
-        self.modeentry.insert(0, self.dataDict['mode'])
-        self.typeentry.insert(0, self.dataDict['type'])
-        self.serialentry.insert(0, self.dataDict['serial'])
-        self.manentry.insert(0, self.dataDict['mfg'])
-        self.name_fullentry.insert(0, self.dataDict['name_given']+ ' ' + self.dataDict['name_family'])
-        self.lowrateentry.insert(0, self.dataDict['lowrate'])
+        self.model_entry.insert(0, self.dataDict['model'])
+        self.dev_mode_entry.insert(0, self.dataDict['mode'])
+        self.type_entry.insert(0, self.dataDict['type'])
+        self.serial_entry.insert(0, self.dataDict['serial'])
+        self.man_entry.insert(0, self.dataDict['mfg'])
+        self.name_full_entry.insert(0, self.dataDict['name_given']+ ' ' + self.dataDict['name_family'])
+        self.lowrate_entry.insert(0, self.dataDict['lowrate'])
         check_date = datetime.datetime.strptime(self.dataDict['sess_date'], "%Y%m%dT%H%M%S%z").replace(tzinfo=None)
-        self.sess_dateentry.insert(0, check_date)
+        self.sess_date_entry.insert(0, check_date)
+        self.dev_max_tracking_entry.insert(0, self.dataDict['max_tracking'])
 
     def onPrintButtonPressed(self):
         text = self.editor.get("1.0",END)
