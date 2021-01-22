@@ -317,8 +317,8 @@ class bioImport():
         self.bio_dict = {
         'name_given':mode[8].get('NAME_GIVEN', 'Not Given'),
         'name_family':mode[8].get('NAME_FAMILY', 'Not Given'),
-        'followup_physician'
-        'sess_date':mode[10].get('DATE', datetime.datetime.now()),
+        #'followup_physician'
+        'sess_date': datetime.datetime.strptime(mode[10].get('DATE'), "%Y%m%dT%H%M%S%z").replace(tzinfo=None),
         'type':mode[4].get('TYPE', '-'), # CIED device type
         'model': mode[4].get('MODEL', '-'), # device model name
         'serial': mode[4].get('SERIAL', '-'), # device serial number

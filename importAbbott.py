@@ -16,7 +16,7 @@ class AbbotImport():
                         'name_given':mode.get('name_given', 'Not Given'),
                         'name_family':mode.get('name_family', 'Not Given'),
                         'followup_physician':mode.get('Follow-up Physician', '-'),
-                        'sess_date':mode.get('', datetime.datetime.now()),
+                        'sess_date':mode.get('Session Timestamp'),
                         'type':mode.get('type', '-'),
                         'model':mode.get('Device Model Number', '-'),
                         'device_name':mode.get('Device Model Name','-'),

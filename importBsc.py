@@ -19,7 +19,7 @@ class BscImport():
         mode = modeclass.getbscData(fileName)
         self.bsc_Dict = {'name_given':mode.get('PatientFirstName', 'Not Given'),
                         'name_family':mode.get('PatientLastName', 'Not Given'),
-                        'sess_date':mode.get('', datetime.datetime.now()),
+                        'sess_date':mode.get('', datetime.datetime.now(tz=None).strftime("%d-%m-%Y %H:%M:%S")),
                         'type':mode.get('SystemTypeTierName', '-'),
                         'model':mode.get('SystemName', '-'),
                         'serial':mode.get('SystemSerialNumber', '-'),

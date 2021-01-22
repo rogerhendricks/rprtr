@@ -263,11 +263,18 @@ class Editor(tk.Tk):
         self.man_entry.insert(0, self.dataDict['mfg'])
         self.name_full_entry.insert(0, self.dataDict['name_given']+ ' ' + self.dataDict['name_family'])
         self.lowrate_entry.insert(0, self.dataDict['lowrate'])
-        check_date = datetime.datetime.strptime(self.dataDict['sess_date'], "%Y%m%dT%H%M%S%z").replace(tzinfo=None)
-        self.sess_date_entry.insert(0, check_date)
+
         self.treeview.set(0,"two", value="5.0")
-        self.dev_max_tracking_entry.insert(0, self.dataDict['max_tracking'])
+        #check_date = datetime.datetime.strptime(str(self.dataDict['sess_date']), "%Y%m%dT%H%M%S%z").replace(tzinfo=None) # Working for Biotronik
+        #check_date = datetime.datetime.strptime(str(self.dataDict['sess_date']), "%Y%m%dT%H%M%S%z").replace(tzinfo=None)
+
+        self.sess_date_entry.insert(0, str(self.dataDict['sess_date']))
+
         self.dev_sensed_AV_delay_entry.insert(0, self.dataDict['sensed_AV_delay'])
+        #self.dev_max_tracking_entry.insert(0, self.dataDict['max_tracking'])
+
+        
+
 
         
 
