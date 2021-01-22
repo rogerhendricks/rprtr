@@ -63,7 +63,7 @@ class Editor(tk.Tk):
         toolbar.grid(column = 0, row = 0, sticky='W' ,columnspan = 4, padx = 5, pady= 5)
         openfiletb = Button(toolbar, text="Open File", width=9, command=self.openfile)
         openfiletb.grid(column = 0, row = 0, padx = 5, pady= 5)
-        runbtn = Button(toolbar, text="Populate", width = 8, command=self.popultaeButtonPressed)
+        runbtn = Button(toolbar, text="Populate", width = 8, command=self.populateButtonPressed)
         runbtn.grid(column=1, row=0, padx = 5, pady= 5)
         dicbtn = Button(toolbar, text="To PDF", width = 8, command=self.onPrintButtonPressed)
         dicbtn.grid(column=2, row=0, padx = 5, pady= 5)
@@ -87,8 +87,31 @@ class Editor(tk.Tk):
         settings_notebook = Notebook(content, padding= 10)
         settings_frame = Frame(settings_notebook)
         settings_frame_2 = Frame(settings_notebook)
+        self.tree = Treeview(settings_frame_2, height=4, selectmode='browse') # The height is in rows
+
+
+        # treeview columns
+        self.tree["columns"] = ("one", "two", "three", "four")
+        self.tree.column("#0", width=75, minwidth=25, stretch=1)
+        self.tree.column("one", width=75, minwidth=25, stretch=1)
+        self.tree.column("two", width=75, minwidth=25, stretch=1)
+        self.tree.column("three", width=75, minwidth=25, stretch=1)
+        self.tree.column("four", width=75, minwidth=25, stretch=1)
+        
+        # Treeview headings
+        self.tree.heading("#0", text="Chamber", anchor=W)
+        self.tree.heading("one", text="Voltage", anchor=W)
+        self.tree.heading("two", text="Pulse Width", anchor=W)
+        self.tree.heading("three", text="Polarity", anchor=W)
+        self.tree.heading("four", text="Sensitivity", anchor=W)
+
+        self.tree.insert("","end", iid=0, text="RA", values=("0.6", "0.7", "0.8", "0.9", "1.0", "1.1"))
+        self.tree.insert("","end", iid=1, text="RV", values=("0.6", "0.7", "0.8", "0.9", "1.0", "1.1"))
+        self.tree.insert("","end",iid=2, text="LV", values=("0.6", "0.7", "0.8", "0.9", "1.0", "1.1"))
+
         settings_notebook.add(settings_frame, text="Settings 1")
         settings_notebook.add(settings_frame_2, text="Settings 2")
+        
         ##### Frame and FrameLabel for Episodes  #####
         episode = Frame(self)
         episode_frame = LabelFrame(episode, text="Episodes", borderwidth=5, width=200, height=150)
@@ -150,6 +173,7 @@ class Editor(tk.Tk):
         ##### Sub frames of content frame
         device_frame.grid(column=0, row=0)
         settings_notebook.grid(column=1, row=0, padx= 10, pady = 10)
+        self.tree.grid(column=0, row=0, sticky = (N,E,W))
 
         ############ Device Fields #############
         self.name_full_lbl.grid(column=0, row=1, sticky = E, padx = 5, pady = 3)
@@ -197,6 +221,8 @@ class Editor(tk.Tk):
         self.editor = tkst.ScrolledText(master = editor_content, wrap = WORD, width = 75, height = 15, font=("Helvetica", 12))
         self.editor.grid(column = 0, columnspan = 3, padx = 10, pady = 10)
 
+        self.treeview = self.tree
+
 
     def openfile(self):
         global fileName
@@ -213,7 +239,7 @@ class Editor(tk.Tk):
         #except:
             #print("No file exists")
     
-    def popultaeButtonPressed(self):
+    def populateButtonPressed(self):
         #Bring in Data class and instatiate it.
         d = getData.Data()
         self.dataDict = d.data(fileName)
@@ -239,8 +265,11 @@ class Editor(tk.Tk):
         self.lowrate_entry.insert(0, self.dataDict['lowrate'])
         check_date = datetime.datetime.strptime(self.dataDict['sess_date'], "%Y%m%dT%H%M%S%z").replace(tzinfo=None)
         self.sess_date_entry.insert(0, check_date)
+        self.treeview.set(0,"two", value="5.0")
         self.dev_max_tracking_entry.insert(0, self.dataDict['max_tracking'])
         self.dev_sensed_AV_delay_entry.insert(0, self.dataDict['sensed_AV_delay'])
+
+        
 
     def onPrintButtonPressed(self):
         text = self.editor.get("1.0",END)
