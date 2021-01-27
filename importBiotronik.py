@@ -317,10 +317,13 @@ class bioImport():
         self.bio_dict = {
         'name_given':mode[8].get('NAME_GIVEN', 'Not Given'),
         'name_family':mode[8].get('NAME_FAMILY', 'Not Given'),
-        #'followup_physician'
+        'client_id':mode[8].get('ID', '-'),
+        'followup_physician':'-',
         'sess_date': datetime.datetime.strptime(mode[10].get('DATE'), "%Y%m%dT%H%M%S%z").replace(tzinfo=None),
+        'dev_implant_date': datetime.datetime.strptime(mode[4].get('IMPLANT_DT'), "%Y%m%dT%H%M%S").strftime("%d-%m-%Y"),
         'type':mode[4].get('TYPE', '-'), # CIED device type
         'model': mode[4].get('MODEL', '-'), # device model name
+        'device_name':mode[4].get('MODEL','-'),
         'serial': mode[4].get('SERIAL', '-'), # device serial number
         'mfg':mode[4].get('MFG', 'Biotronik'), # manufacturer
 
@@ -378,8 +381,9 @@ class bioImport():
         'mode': mode[0].get('MODE', '-'), 
         'lowrate': mode[0].get('LOWRATE', '0'),
         'max_tracking_rate': mode[0].get('MAX_TRACKING_RATE', '0'),
-
-        'sensed_AV_delay'
+        'max_sensor_rate':mode[0].get('MAX_SENSOR_RATE', '0'),
+        'paced_AV_delay':mode[0].get('SAV_DELAY_LOW', '0'),
+        'sensed_AV_delay':mode[0].get('PAV_DELAY_LOW', ''),
         'ra_amplitude':mode[17].get('AMPLITUDE', '0'),
         'ra_pulsewidth':mode[17].get('PULSEWIDTH', '0'),
         'ra_pace_polarity':mode[17].get('POLARITY', '-'), # ra pacing polarity
@@ -391,7 +395,9 @@ class bioImport():
         'rv_pace_polarity':mode[19].get('POLARITY', '-'), # rv pacing polarity
         'rv_sense_polarity':mode[18].get('POLARITY', '-'),
         'lv_amplitude':mode[9].get('lv_amplitude', '0'), # these are the measurements for LV
+        'lv_pulsewidth':'-',
         'lv_polarity':mode[9].get('POLARITY', '-'),
+        'LV Pulse Configuration': '-',
 
         ##### Battery 5 and 2
         'batt_voltage' : mode[5].get('VOLTAGE', '0'), 

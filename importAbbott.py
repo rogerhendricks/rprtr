@@ -13,10 +13,12 @@ class AbbotImport():
         modeclass = AbbotImport()
         mode = modeclass.getabbotData(fileName)
         self.abb_Dict = {
-                        'name_given':mode.get('name_given', 'Not Given'),
+                        'name_given':mode.get('Patient Name', 'Not Given'),
                         'name_family':mode.get('name_family', 'Not Given'),
+                        'client_id':mode.get('Patient ID', '-'),
                         'followup_physician':mode.get('Follow-up Physician', '-'),
                         'sess_date':mode.get('Session Timestamp'),
+                        'dev_implant_date': mode.get('Implant Date: Device', '-'),
                         'type':mode.get('type', '-'),
                         'model':mode.get('Device Model Number', '-'),
                         'device_name':mode.get('Device Model Name','-'),
@@ -31,19 +33,18 @@ class AbbotImport():
 
                         
                         ####### arrhythmia log
-                        'at_burden':mode.get('', '0'), #at/af burden in pecentage form
+                        'at_burden':mode.get('', ''), #at/af burden in pecentage form
                         'ataf_reset':mode.get('Total Number of AT/AF Episodes Since Last Cleared', '0'),
-                        'ataf_total'
-                        'total_pac_count'
-                        'total_pvc_count'
-                        'nsvt_counter_life'
-                        'vt_counter_life'
-                        'vt1_counter_life'
-                        'vf_counter_life'
+                        'total_pac_count':mode.get('', ''),
+                        'total_pvc_count':mode.get('', ''),
+                        'nsvt_counter_life':mode.get('', ''),
                         'nsvt_counter_reset':mode.get('LFDA Non Sustained Episodes', '0'),
-                        'vt_counter_reset'
-                        'vt1_counter_reset'
-                        'vf_counter_reset'
+                        'vt_counter_life':mode.get('', ''),
+                        'vt1_counter_life':mode.get('', ''),
+                        'vf_counter_life':mode.get('', ''),
+                        'vt_counter_reset':mode.get('', ''),
+                        'vt1_counter_reset':mode.get('', ''),
+                        'vf_counter_reset':mode.get('', ''),
 
                         ####### test results
                         # RA
@@ -59,6 +60,7 @@ class AbbotImport():
                         'hv_test_impedance':mode.get('HV Lead Impedance','0'),                      
                         
                         # LV
+                        'lv_test_sense':mode.get('', ''),
                         'lv_test_threshold':mode.get('LV. AutoCapture Capture Test Pulse Amplitude (threshold)', '0'),
                         'lv_test_pulsewidth':mode.get('LV. AutoCapture Capture Test Pulse Width', '0'),
                         'lv_test_impedance':mode.get('LV Pacing Lead Impedance', '0'),
@@ -68,7 +70,7 @@ class AbbotImport():
                         'lowrate':mode.get('Base Rate', '0'),
                         'max_tracking_rate':mode.get('Maximum Tracking Rate', '0'),
                         'max_sensor_rate':mode.get('Maximum Sensor Rate', '0'), ##############################################
-                        
+                        'paced_AV_delay':mode.get('Paced AV Delay', '0'),
                         'sensed_AV_delay':mode.get('Sensed AV Delay', '0'),
                         'ra_amplitude':mode.get('Atrial Pulse Amplitude', '0'),
                         'ra_pulsewidth':mode.get('Atrial Pulse Width', '0'),
@@ -82,34 +84,8 @@ class AbbotImport():
                         'rv_sense_polarity':mode.get('V Sense Polarity', '-'),
                         'lv_amplitude':mode.get('LV Pulse Amplitude', '0'),
                         'lv_pulsewidth':mode.get('LV Pulse Width', '0'),
-                        'lv_polarity':mode.get('', '-'),
-
-
-
-
-
-
-
-
-
-
-                        
-                        'ra_polarity':mode.get('A Pace Polarity', '-'),
-                        'ra_pulsewidth':mode.get('Atrial Pulse Width', '0'),
-
-                        'rv_sense':mode.get('Ventricular Signal Amplitude', '0'),
-                        'rv_polarity':mode.get('V Pace Polarity', '-'),
-                        'rv_threshold':mode.get('RV. Capture Test Threshold Amplitude', '0'),
-                        'rv_pulsewidth':mode.get('RV Pulse Width', '0'),
-                        'rv_impedance':mode.get('Ventricular Pacing Lead Impedance', '0'),
-                        'hv_impedance':mode.get('HV Lead Impedance', '0'),
-
-                        'lv_sense':mode.get('', '0'),
-                        'lv_impedance':mode.get('LV Pacing Lead Impedance', '0'),
-                        'lv_threshold':mode.get('', '0'),
-                        'lv_amplitude':mode.get('lv_amplitude', '0'),
-                        'lv_pulsewidth':mode.get('lv_pulsewidth', '0'),
-                        'lv_polarity':mode.get('', '-'),
+                        'lv_polarity':mode.get('V Pace Polarity', '-'),
+                        'LV Pulse Configuration': mode.get('LV Pulse Configuration', '-'),
 
                         ######  Battery
                         'batt_voltage':mode.get('batt_voltage', '0'),

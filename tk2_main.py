@@ -63,11 +63,11 @@ class Editor(tk.Tk):
         toolbar.grid(column = 0, row = 0, sticky='W' ,columnspan = 4, padx = 5, pady= 5)
         openfiletb = Button(toolbar, text="Open File", width=9, command=self.openfile)
         openfiletb.grid(column = 0, row = 0, padx = 5, pady= 5)
-        runbtn = Button(toolbar, text="Populate", width = 8, command=self.populateButtonPressed)
+        runbtn = Button(toolbar, text="To PDF", width = 8, command=self.onPrintButtonPressed)
         runbtn.grid(column=1, row=0, padx = 5, pady= 5)
-        dicbtn = Button(toolbar, text="To PDF", width = 8, command=self.onPrintButtonPressed)
+        dicbtn = Button(toolbar, text="To DB", width = 8, command=self.onDbButtonPressed)
         dicbtn.grid(column=2, row=0, padx = 5, pady= 5)
-        dbbtn = Button(toolbar, text="To DB", width = 8, command=self.onDbButtonPressed)
+        dbbtn = Button(toolbar, text="To Email", width = 8, command=self.onDbButtonPressed)
         dbbtn.grid(column=3, row=0, padx = 5, pady= 5)
 
         #runfiletb = Button(toolbar, text="Run File", width=6, command=self.set)
@@ -105,9 +105,9 @@ class Editor(tk.Tk):
         self.tree.heading("three", text="Polarity", anchor=W)
         self.tree.heading("four", text="Sensitivity", anchor=W)
 
-        self.tree.insert("","end", iid=0, text="RA", values=("0.6", "0.7", "0.8", "0.9", "1.0", "1.1"))
-        self.tree.insert("","end", iid=1, text="RV", values=("0.6", "0.7", "0.8", "0.9", "1.0", "1.1"))
-        self.tree.insert("","end",iid=2, text="LV", values=("0.6", "0.7", "0.8", "0.9", "1.0", "1.1"))
+        self.tree.insert("","end", iid=0, text="RA", values=("", "", "", "", ""))
+        self.tree.insert("","end", iid=1, text="RV", values=("", "", "", "", ""))
+        self.tree.insert("","end",iid=2, text="LV", values=("", "", "", "", ""))
 
         settings_notebook.add(settings_frame, text="Settings 1")
         settings_notebook.add(settings_frame_2, text="Settings 2")
@@ -132,7 +132,7 @@ class Editor(tk.Tk):
         self.lowrate_lbl = Label(device_frame, text="Low Rate")
         self.lowrate_entry = Entry(device_frame, textvariable="low_rate")
         self.implant_lbl = Label(device_frame, text="Implant Date")
-        self.implant_entry = Entry(device_frame, textvariable="implant")
+        self.implant_entry = Entry(device_frame, textvariable="dev_implant_date")
         self.sess_date_lbl = Label(device_frame, text="Session Date")# to change the font color / its a ttk widget add , background='white
         self.sess_date_entry = Entry(device_frame, textvariable="sess_date")
         
@@ -231,6 +231,7 @@ class Editor(tk.Tk):
                                title="Choose a file."
                                )
         print(fileName)
+        self.populate()
         return fileName
         # Using try in case user types in unknown file or closes without choosing a file.
         #try:
@@ -239,7 +240,7 @@ class Editor(tk.Tk):
         #except:
             #print("No file exists")
     
-    def populateButtonPressed(self):
+    def populate(self):
         #Bring in Data class and instatiate it.
         d = getData.Data()
         self.dataDict = d.data(fileName)
@@ -255,6 +256,7 @@ class Editor(tk.Tk):
         self.sess_date_entry.delete(0, END)
         self.dev_max_tracking_entry.delete(0, END)
         self.dev_sensed_AV_delay_entry.delete(0, END)
+        self.implant_entry.delete(0, END)
         # Populate entry widgets
         self.model_entry.insert(0, self.dataDict['model'])
         self.dev_mode_entry.insert(0, self.dataDict['mode'])
@@ -263,8 +265,25 @@ class Editor(tk.Tk):
         self.man_entry.insert(0, self.dataDict['mfg'])
         self.name_full_entry.insert(0, self.dataDict['name_given']+ ' ' + self.dataDict['name_family'])
         self.lowrate_entry.insert(0, self.dataDict['lowrate'])
+        self.implant_entry.insert(0, self.dataDict['dev_implant_date'])
 
-        self.treeview.set(0,"two", value="5.0")
+        #### SETTINGS TREEVIEW
+        # ROW ONE IS RA
+        self.treeview.set(0,"one", value= self.dataDict['ra_amplitude'])
+        self.treeview.set(0,"two", value= self.dataDict['ra_pulsewidth'])
+        self.treeview.set(0,"three", value= self.dataDict['ra_sense_polarity'])
+        self.treeview.set(0,"four", value= self.dataDict['ra_sensitivity'])
+        # ROW TWO IS RV
+        self.treeview.set(1,"one", value= self.dataDict['rv_amplitude'])
+        self.treeview.set(1,"two", value= self.dataDict['rv_pulsewidth'])
+        self.treeview.set(1,"three", value= self.dataDict['rv_sense_polarity'])
+        self.treeview.set(1,"four", value= self.dataDict['rv_sensitivity'])
+        # ROW THREE IS LV
+        self.treeview.set(2,"one", value= self.dataDict['lv_amplitude'])
+        self.treeview.set(2,"two", value= self.dataDict['lv_pulsewidth'])
+        self.treeview.set(2,"three", value= self.dataDict['lv_polarity'])
+
+        
         #check_date = datetime.datetime.strptime(str(self.dataDict['sess_date']), "%Y%m%dT%H%M%S%z").replace(tzinfo=None) # Working for Biotronik
         #check_date = datetime.datetime.strptime(str(self.dataDict['sess_date']), "%Y%m%dT%H%M%S%z").replace(tzinfo=None)
 
@@ -272,16 +291,9 @@ class Editor(tk.Tk):
 
         self.dev_sensed_AV_delay_entry.insert(0, self.dataDict['sensed_AV_delay'])
         #self.dev_max_tracking_entry.insert(0, self.dataDict['max_tracking'])
-
-        
-
-
-        
-
+  
     def onPrintButtonPressed(self):
         text = self.editor.get("1.0",END)
-        #comments = {'comments':text}
-        #bioDict.update = (comments)
         self.dataDict.update({'comments':text})
         print(self.dataDict)
         env = Environment(loader=FileSystemLoader('.'))
@@ -295,7 +307,7 @@ class Editor(tk.Tk):
         conn = sqlite3.connect('test.db')
         c = conn.cursor()
         print("Opened database successfully")   
-        c.execute('''INSERT INTO device ( serial, type, model, mode, mfg, lowrate, max_tracking_rate, name_given, name_family, sess_date) VALUES (?,?,?,?,?,?,?,?,?,?)''', (self.dataDict['serial'], self.dataDict['type'], self.dataDict['model'], self.dataDict['mode'], self.dataDict['mfg'], self.dataDict['lowrate'], self.dataDict['max_tracking_rate'], self.dataDict['name_given'], self.dataDict['name_family'], self.dataDict['sess_date']))
+        c.execute('''INSERT INTO patient ( name_given, name_family, sess_date) VALUES (?,?,?)''', (self.dataDict['name_given'], self.dataDict['name_family'], self.dataDict['sess_date']))
         conn.commit()
         conn.close()
         print(self.typeentry.get())
@@ -303,4 +315,3 @@ class Editor(tk.Tk):
 if __name__ == "__main__":
     editor = Editor()
     editor.mainloop()
-

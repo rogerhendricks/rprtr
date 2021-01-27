@@ -1,3 +1,12 @@
 {
-    "python.pythonPath": "venv\\Scripts\\python.exe"
+    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:rprtr}/patient.db",
+            "name": "cied"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }
